@@ -26,7 +26,7 @@ $tickets           = $pdo->query("SELECT * FROM faults ORDER BY created_at DESC"
 <!-- Navbar -->
 <nav class="navbar-monik d-flex align-items-center justify-content-between px-4 py-3">
     <div class="d-flex align-items-center">
-        <span class="logo-mark">MA</span>
+    <img src="../assets/MonikLogoOnly.png" alt="Monik" style="height:38px;width:38px;object-fit:contain;border-radius:8px;margin-right:10px;">
         <div>
             <span class="navbar-brand-text">Main Admin Dashboard</span><br>
             <span style="font-size:0.75rem;color:var(--text-muted);">Welcome, <?php echo htmlspecialchars($_SESSION['full_name']); ?></span>

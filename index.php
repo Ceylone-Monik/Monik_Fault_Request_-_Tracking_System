@@ -15,7 +15,7 @@
 <!-- Navbar -->
 <nav class="navbar-monik d-flex align-items-center justify-content-between px-4 py-3" style="position:sticky;top:0;z-index:100;">
     <div class="d-flex align-items-center">
-        <span class="logo-mark">MG</span>
+        <img src="assets/MonikLogoOnly.png" alt="Monik Logo" style="height:38px;width:38px;object-fit:contain;border-radius:8px;margin-right:10px;">
         <span class="navbar-brand-text">Monik Group <span class="brand-badge">IT Portal</span></span>
     </div>
     <a href="auth/login.php" class="btn-ghost text-decoration-none" style="font-size:0.85rem; padding: 0.4rem 1rem; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: var(--text-muted); transition: all 0.3s;">
@@ -28,9 +28,7 @@
 
     <!-- Hero Header -->
     <div class="text-center mb-5 mt-4 fade-in">
-        <div style="display:inline-flex;align-items:center;justify-content:center;width:72px;height:72px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));border-radius:20px;margin-bottom:1.5rem;box-shadow:0 8px 32px rgba(79,142,247,0.4);">
-            <i class="fas fa-bolt" style="font-size:1.8rem;color:#fff;"></i>
-        </div>
+        <img src="assets/Monik.jpeg" alt="Monik Group" style="height:80px;object-fit:contain;border-radius:12px;margin-bottom:1.5rem;box-shadow:0 8px 32px rgba(0,0,0,0.4);">
         <h1 class="page-title mb-2">Fault Request & Tracking System</h1>
         <p style="color:var(--text-muted);font-size:1rem;">Submit a new IT fault report or track your existing request by Ticket ID.</p>
     </div>

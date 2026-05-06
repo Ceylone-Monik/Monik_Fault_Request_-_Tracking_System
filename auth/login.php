@@ -15,9 +15,7 @@
 
     <!-- Logo -->
     <div class="text-center mb-4 fade-in">
-        <div style="display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));border-radius:18px;margin-bottom:1rem;box-shadow:0 8px 32px rgba(79,142,247,0.4);">
-            <i class="fas fa-lock" style="font-size:1.6rem;color:#fff;"></i>
-        </div>
+        <img src="../assets/Monik.jpeg" alt="Monik Group" style="height:70px;object-fit:contain;border-radius:12px;margin-bottom:1rem;box-shadow:0 8px 24px rgba(0,0,0,0.5);">
         <h1 class="page-title" style="font-size:1.7rem;">Management Login</h1>
         <p style="color:var(--text-muted);font-size:0.88rem;">Monik Group IT — Staff &amp; Admin Access</p>
     </div>

@@ -43,3 +43,4 @@ function searchTicket() {
             resultArea.innerHTML = '<div class="alert alert-danger">Error fetching data.</div>';
         });
 }
+

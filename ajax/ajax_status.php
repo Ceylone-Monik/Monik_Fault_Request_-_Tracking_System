@@ -4,7 +4,7 @@ $tid = $_GET['tid'] ?? '';
 
 if ($tid) {
     $stmt = $pdo->prepare("
-        SELECT f.ticket_id, f.status, f.company_name, f.fault_type, f.description,
+        SELECT f.ticket_id, f.status, f.company_name, f.fault_type, f.description, f.technician_notes,
                u.full_name AS tech_name, u.profession AS tech_profession
         FROM faults f
         LEFT JOIN users u ON f.assigned_to = u.id
@@ -47,7 +47,18 @@ if ($tid) {
                 <div class='ticket-info-row'>
                     <div class='ticket-info-label'><i class='fas fa-hard-hat me-1'></i> Technician</div>
                     <div class='ticket-info-value'>$tech</div>
-                </div>
+                </div>";
+
+        // ADDED: Show Technician Notes if they exist
+        if (!empty($res['technician_notes'])) {
+            echo "
+                <div class='ticket-info-row' style='border-top:1px solid rgba(255,255,255,0.05); padding-top:10px; margin-top:10px;'>
+                    <div class='ticket-info-label'><i class='fas fa-comment-medical me-1'></i> Repair Notes</div>
+                    <div class='ticket-info-value' style='color:var(--accent-yellow); font-style:italic;'>\"" . htmlspecialchars($res['technician_notes']) . "\"</div>
+                </div>";
+        }
+
+        echo "
             </div>
         </div>";
     } else {

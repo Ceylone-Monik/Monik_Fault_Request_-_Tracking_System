@@ -13,9 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt = $pdo->prepare("INSERT INTO users (full_name, username, password, role, profession) VALUES (?, ?, ?, ?, ?)");
         $stmt->execute([$name, $user, $hashed_pass, $role, $profession]);
         
-        // Redirect back to the correct dashboard
-        $redirect = ($role == 'Assign Admin') ? 'main_admin.php' : 'assign_admin.php';
-        header("Location: $redirect?success=user_added");
+        // Redirect back to Manage Staff page (works for both roles)
+        header("Location: manage_users.php?success=user_added");
     } catch (Exception $e) {
         die("Error adding user: " . $e->getMessage());
     }

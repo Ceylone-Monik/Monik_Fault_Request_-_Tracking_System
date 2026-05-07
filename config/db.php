@@ -1,4 +1,6 @@
 <?php
+// Start session safely (won't restart if already started)
+if (session_status() === PHP_SESSION_NONE) session_start();
 $host = 'localhost';
 $db   = 'fault_management_db';
 $user = 'root';

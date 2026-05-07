@@ -81,6 +81,7 @@ $backLink = match($_SESSION['role']) {
                 <?php
                 $rows = [
                     ['fas fa-building',     'Company',     $fault['company_name']],
+                    ['fas fa-map-marker-alt','Branch',     $fault['branch'] ?? '—'],
                     ['fas fa-id-badge',     'Employee ID', $fault['employee_id']],
                     ['fas fa-tag',          'Fault Type',  $fault['fault_type']],
                     ['fas fa-align-left',   'Description', $fault['description']],

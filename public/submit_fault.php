@@ -49,6 +49,11 @@
             </div>
 
             <div class="mb-3">
+                <label class="form-label-dark">Branch</label>
+                <input type="text" name="branch" class="form-control-dark form-control" required placeholder="e.g. Colombo, Kandy, Galle…">
+            </div>
+
+            <div class="mb-3">
                 <label class="form-label-dark">Employee Number <span style="color:var(--text-muted);font-weight:400;text-transform:none;letter-spacing:0;">(last digits only)</span></label>
                 <input type="number" id="num" class="form-control-dark form-control" placeholder="e.g. 123" required oninput="genID()">
             </div>

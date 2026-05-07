@@ -2,9 +2,10 @@
 require_once '../config/db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $emp_id = $_POST['emp_id'];
+    $emp_id       = $_POST['emp_id'];
     $company_code = $_POST['company'];
-    $description = $_POST['description'];
+    $branch       = trim($_POST['branch'] ?? '');
+    $description  = $_POST['description'];
     
     // Map code to Full Company Name
     $companies = [
@@ -23,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ticket_id = "TIC-" . rand(1000, 9999);
 
     try {
-        $sql = "INSERT INTO faults (ticket_id, company_name, employee_id, fault_type, description, status) 
-                VALUES (?, ?, ?, 'General', ?, 'New')";
+        $sql = "INSERT INTO faults (ticket_id, company_name, branch, employee_id, fault_type, description, status)
+                VALUES (?, ?, ?, ?, 'General', ?, 'New')";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$ticket_id, $company_name, $emp_id, $description]);
+        $stmt->execute([$ticket_id, $company_name, $branch, $emp_id, $description]);
 
         // Redirect to success page with the ticket ID in the URL
         header("Location: success.php?tid=" . $ticket_id);

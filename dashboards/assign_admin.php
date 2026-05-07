@@ -39,8 +39,8 @@ require_once '../includes/header.php';
                     </thead>
                     <tbody>
                         <?php foreach ($pendingTickets as $t): ?>
-                        <tr>
-                            <td><a href="fault_detail.php?id=<?php echo $t['id']; ?>" style="color:var(--accent-blue);font-weight:700;text-decoration:none;" title="View detail"><?php echo $t['ticket_id']; ?> <i class="fas fa-arrow-up-right-from-square" style="font-size:0.65rem;opacity:0.7;"></i></a></td>
+                        <tr style="cursor:default;">
+                            <td><a href="fault_detail.php?id=<?php echo $t['id']; ?>" style="color:var(--accent-blue);font-weight:700;text-decoration:none;" title="View fault detail"><?php echo $t['ticket_id']; ?></a></td>
                             <td style="font-size:0.82rem;color:var(--text-muted);"><?php echo htmlspecialchars($t['company_name']); ?></td>
                             <td><?php echo htmlspecialchars($t['description']); ?></td>
                             <form action="dispatch_logic.php" method="POST">

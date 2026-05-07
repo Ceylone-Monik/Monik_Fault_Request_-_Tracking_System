@@ -165,33 +165,45 @@ if (session_status() === PHP_SESSION_NONE) session_start();
         <span>MONIK PORTAL</span>
     </div>
 
+    <?php
+    // Detect current page for active highlighting
+    $currentPage = basename($_SERVER['PHP_SELF']);
+
+    // Each role's "home" dashboard filename
+    $homePage = match($_SESSION['role']) {
+        'Main Admin'   => 'main_admin.php',
+        'Assign Admin' => 'assign_admin.php',
+        default        => 'technician.php',
+    };
+
+    // Helper: returns 'active' class if current page matches
+    $isActive = fn($page) => $currentPage === $page ? ' active' : '';
+    ?>
+
     <div class="mt-2 flex-grow-1">
         <div class="nav-section-label">Navigation</div>
 
-        <a href="<?php
-            if($_SESSION['role'] == 'Main Admin') echo 'main_admin.php';
-            elseif($_SESSION['role'] == 'Assign Admin') echo 'assign_admin.php';
-            else echo 'technician.php';
-        ?>" class="nav-link-custom active">
+        <a href="<?php echo $homePage; ?>" class="nav-link-custom<?php echo $isActive($homePage); ?>">
             <i class="fas fa-th-large"></i> Dashboard
         </a>
 
         <?php if($_SESSION['role'] == 'Main Admin'): ?>
             <div class="nav-section-label">Management</div>
-            <a href="all_faults.php" class="nav-link-custom"><i class="fas fa-database"></i> All Faults</a>
-            <a href="manage_users.php" class="nav-link-custom"><i class="fas fa-user-gear"></i> Manage Staff</a>
+            <a href="all_faults.php"    class="nav-link-custom<?php echo $isActive('all_faults.php'); ?>"><i class="fas fa-database"></i> All Faults</a>
+            <a href="manage_users.php"  class="nav-link-custom<?php echo $isActive('manage_users.php'); ?>"><i class="fas fa-user-gear"></i> Manage Staff</a>
         <?php endif; ?>
 
         <?php if($_SESSION['role'] == 'Assign Admin'): ?>
             <div class="nav-section-label">Operations</div>
-            <a href="assign_admin.php" class="nav-link-custom"><i class="fas fa-satellite-dish"></i> New Dispatches</a>
-            <a href="all_faults.php" class="nav-link-custom"><i class="fas fa-file-invoice"></i> Fault Records</a>
+            <a href="assign_admin.php"         class="nav-link-custom<?php echo $isActive('assign_admin.php'); ?>"><i class="fas fa-satellite-dish"></i> New Dispatches</a>
+            <a href="all_faults.php"           class="nav-link-custom<?php echo $isActive('all_faults.php'); ?>"><i class="fas fa-file-invoice"></i> Fault Records</a>
+            <a href="manage_technicians.php"   class="nav-link-custom<?php echo $isActive('manage_technicians.php'); ?>"><i class="fas fa-hard-hat"></i> Manage Technicians</a>
         <?php endif; ?>
 
         <?php if($_SESSION['role'] == 'Technician'): ?>
             <div class="nav-section-label">My Work</div>
-            <a href="technician.php" class="nav-link-custom"><i class="fas fa-screwdriver-wrench"></i> Active Tasks</a>
-            <a href="my_history.php" class="nav-link-custom"><i class="fas fa-clock-rotate-left"></i> My History</a>
+            <a href="technician.php"  class="nav-link-custom<?php echo $isActive('technician.php'); ?>"><i class="fas fa-screwdriver-wrench"></i> Active Tasks</a>
+            <a href="my_history.php"  class="nav-link-custom<?php echo $isActive('my_history.php'); ?>"><i class="fas fa-clock-rotate-left"></i> My History</a>
         <?php endif; ?>
     </div>
 

@@ -12,7 +12,7 @@
 
 <nav class="navbar-monik d-flex align-items-center justify-content-between px-4 py-3">
     <div class="d-flex align-items-center">
-    <img src="../assets/MonikLogoOnly.png" alt="Monik" style="height:36px;width:36px;object-fit:contain;border-radius:8px;margin-right:10px;">
+    <img src="../assets/MonikLogoOnly.jpeg" alt="Monik" style="height:36px;width:36px;object-fit:contain;border-radius:8px;margin-right:10px;">
         <span class="navbar-brand-text">Monik Group <span class="brand-badge">Fault Portal</span></span>
     </div>
     <a href="../index.php" style="color:var(--text-muted);text-decoration:none;font-size:0.85rem;">
@@ -24,7 +24,7 @@
 <div class="container" style="max-width:580px;">
 
     <div class="text-center mb-4 fade-in">
-        <img src="../assets/MonikLogoOnly.png" alt="Monik Group" style="height:52px;object-fit:contain;border-radius:10px;margin-bottom:1rem;box-shadow:0 6px 20px rgba(0,0,0,0.4);">
+        <img src="../assets/MonikLogoOnly.jpeg" alt="Monik Group" style="height:52px;object-fit:contain;border-radius:10px;margin-bottom:1rem;box-shadow:0 6px 20px rgba(0,0,0,0.4);">
         <h1 class="page-title" style="font-size:1.6rem;">Track Your Fault Request</h1>
         <p style="color:var(--text-muted);font-size:0.9rem;margin-top:0.3rem;">Enter your Ticket ID to see the current status and assigned technician.</p>
     </div>

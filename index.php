@@ -15,7 +15,7 @@
 <!-- Navbar -->
 <nav class="navbar-monik d-flex align-items-center justify-content-between px-4 py-3" style="position:sticky;top:0;z-index:100;">
     <div class="d-flex align-items-center">
-        <img src="assets/MonikLogoOnly.png" alt="Monik Logo" style="height:38px;width:38px;object-fit:contain;border-radius:8px;margin-right:10px;">
+        <img src="assets/MonikLogoOnly.jpeg" alt="Monik Logo" style="height:38px;width:38px;object-fit:contain;border-radius:8px;margin-right:10px;">
         <span class="navbar-brand-text">Monik Group <span class="brand-badge">IT Portal</span></span>
     </div>
     <a href="auth/login.php" class="btn-ghost text-decoration-none" style="font-size:0.85rem; padding: 0.4rem 1rem; border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: var(--text-muted); transition: all 0.3s;">

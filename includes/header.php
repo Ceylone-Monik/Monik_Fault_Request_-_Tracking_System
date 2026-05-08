@@ -161,7 +161,7 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 <!-- ── Sidebar ──────────────────────────────────────────── -->
 <div id="sidebar">
     <div class="sidebar-brand">
-        <img src="../assets/MonikLogoOnly.png" alt="Monik Logo" style="height:32px;width:32px;object-fit:contain;border-radius:8px;">
+        <img src="../assets/MonikLogoOnly.jpeg" alt="Monik Logo" style="height:32px;width:32px;object-fit:contain;border-radius:8px;">
         <span>MONIK PORTAL</span>
     </div>
 

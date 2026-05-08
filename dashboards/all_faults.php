@@ -1,29 +1,62 @@
 <?php
-// 1. Auth and Session check
-if (session_status() === PHP_SESSION_NONE) session_start();
-require_once '../config/db.php';
-
-if (!in_array($_SESSION['role'] ?? '', ['Main Admin', 'Assign Admin'])) {
-    header("Location: ../auth/login.php"); exit();
+// 1. Session and Auth check (Must be at the very top)
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// 2. Fetch initial data
-$tickets = $pdo->query("
-    SELECT f.*, u.full_name AS tech_name
-    FROM faults f
-    LEFT JOIN users u ON f.assigned_to = u.id
-    ORDER BY f.created_at DESC
-")->fetchAll();
+require_once '../config/db.php';
 
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['Main Admin', 'Assign Admin'])) {
+    header("Location: ../auth/login.php"); 
+    exit();
+}
+
+// 2. Fetch all fault data initially
+try {
+    $tickets = $pdo->query("
+        SELECT f.*, u.full_name AS tech_name
+        FROM faults f
+        LEFT JOIN users u ON f.assigned_to = u.id
+        ORDER BY f.created_at DESC
+    ")->fetchAll();
+} catch (Exception $e) {
+    die("Database Error: " . $e->getMessage());
+}
+
+// 3. Set Page Title and Include Header
+$pageTitle = "All Faults | Monik Group";
 require_once '../includes/header.php';
 ?>
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 
+<style>
+/* Clickable row styles */
+.clickable-row {
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.clickable-row:hover {
+    background: rgba(37, 99, 235, 0.06) !important;
+}
+
+/* DataTables adjustment for the portal theme */
+.dataTables_wrapper .dataTables_info, 
+.dataTables_wrapper .dataTables_paginate {
+    color: var(--text-muted) !important;
+    font-size: 0.85rem;
+    margin-top: 15px;
+}
+</style>
+
 <div class="glass-card p-4 fade-slide-up">
     <div class="section-title mb-4 d-flex justify-content-between align-items-center">
         <span><i class="fas fa-filter me-2" style="color:var(--accent-blue);"></i> Advanced Filtering</span>
-        <div class="d-flex gap-3">
+        <div class="d-flex gap-2">
+            <button type="button" id="resetFilters" class="btn btn-ghost btn-sm">
+                <i class="fas fa-undo me-1"></i> Clear Filters
+            </button>
+            
             <a href="generate_report.php" id="exportPdfBtn" target="_blank" class="btn btn-danger btn-sm">
                 <i class="fas fa-file-pdf me-1"></i> Export Filtered PDF
             </a>
@@ -62,11 +95,14 @@ require_once '../includes/header.php';
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($tickets as $t): ?>
+                <?php foreach ($tickets as $t): 
+                    $statusMap = ['New'=>'new','Assigned'=>'assigned','In Progress'=>'progress','Resolved'=>'resolved'];
+                    $cls = $statusMap[$t['status']] ?? 'new';
+                ?>
                 <tr class="clickable-row" onclick="window.location='fault_detail.php?id=<?php echo $t['id']; ?>'">
                     <td><strong style="color:var(--accent-blue);"><?php echo $t['ticket_id']; ?></strong></td>
                     <td><?php echo htmlspecialchars($t['company_name']); ?></td>
-                    <td><?php echo $t['status']; ?></td>
+                    <td><span class="status-badge status-<?php echo $cls; ?>"><?php echo $t['status']; ?></span></td>
                     <td><?php echo htmlspecialchars($t['tech_name'] ?? 'Unassigned'); ?></td>
                     <td style="color:var(--text-muted);"><?php echo date('Y-m-d', strtotime($t['created_at'])); ?></td>
                 </tr>
@@ -88,12 +124,12 @@ $(document).ready(function() {
         "order": [[4, "desc"]]
     });
 
-    // 2. Add Custom Date Filter for DataTables
+    // 2. Custom Date Range Filter for DataTables
     $.fn.dataTable.ext.search.push(
         function(settings, data, dataIndex) {
             var min = $('#fromDate').val();
             var max = $('#toDate').val();
-            var date = data[4]; // Date is in Column 4
+            var date = data[4]; 
 
             if (
                 (min === "" && max === "") ||
@@ -107,7 +143,7 @@ $(document).ready(function() {
         }
     );
 
-    // 3. Update Function to Sync PDF Link and Redraw Table
+    // 3. Update Function: Syncs Table View and Export PDF link
     function updateFilters() {
         const from = $('#fromDate').val();
         const to = $('#toDate').val();
@@ -123,15 +159,27 @@ $(document).ready(function() {
         });
         $('#exportPdfBtn').attr('href', 'generate_report.php?' + params.toString());
 
-        // Apply column-specific filters
-        table.column(1).search(comp); // Company Name filter
-        table.column(3).search(tech); // Technician Name filter
+        // Apply column filters
+        table.column(1).search(comp); // Company filter
+        table.column(3).search(tech); // Technician filter
         
-        // Trigger redrawing for the Date Range filter
+        // Apply Date filter redraw
         table.draw();
     }
 
-    // Attach event listeners to all filter inputs
+    // 4. Clear Filters Logic
+    $('#resetFilters').on('click', function() {
+        // Reset HTML inputs
+        $('#fromDate, #toDate, #techSearch, #compSearch').val('');
+        
+        // Reset DataTable and redraw
+        table.search('').columns().search('').draw();
+        
+        // Reset PDF link
+        $('#exportPdfBtn').attr('href', 'generate_report.php');
+    });
+
+    // Event listeners
     $('#fromDate, #toDate, #techSearch, #compSearch').on('change keyup', updateFilters);
 });
 </script>

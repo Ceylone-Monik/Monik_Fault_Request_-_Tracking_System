@@ -23,7 +23,7 @@ require_once '../includes/header.php';
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    line-height: 1; /* Fixes text appearing high or low */
+    line-height: 1;
     padding-top: 0.7rem;
     padding-bottom: 0.7rem;
 }
@@ -34,6 +34,29 @@ require_once '../includes/header.php';
     backdrop-filter: blur(16px);
     border: 1px solid var(--border-glass) !important;
     border-radius: var(--radius-lg);
+}
+
+/* --- CUSTOM ROLE BADGE STYLING --- */
+.badge-role {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Cyan/Blue for Assign Admin */
+.badge-assign-admin {
+    background: rgba(0, 212, 255, 0.1);
+    color: #00d4ff;
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+
+/* Green for Technician */
+.badge-technician {
+    background: rgba(40, 199, 111, 0.1);
+    color: #28c76f;
+    border: 1px solid rgba(40, 199, 111, 0.2);
 }
 </style>
 
@@ -98,7 +121,15 @@ require_once '../includes/header.php';
                             <?php foreach ($all_users as $user): ?>
                             <tr>
                                 <td><strong><?php echo htmlspecialchars($user['full_name']); ?></strong></td>
-                                <td><span class="badge <?php echo ($user['role'] == 'Assign Admin') ? 'bg-info' : 'bg-success'; ?> text-dark"><?php echo $user['role']; ?></span></td>
+                                <td>
+                                    <?php 
+                                        // Dynamic class selection
+                                        $badgeClass = ($user['role'] == 'Assign Admin') ? 'badge-assign-admin' : 'badge-technician';
+                                    ?>
+                                    <span class="badge-role <?php echo $badgeClass; ?>">
+                                        <?php echo $user['role']; ?>
+                                    </span>
+                                </td>
                                 <td class="text-muted"><?php echo htmlspecialchars($user['username']); ?></td>
                                 <td><?php echo $user['profession'] ? htmlspecialchars($user['profession']) : '<span class="text-muted small">N/A</span>'; ?></td>
                                 <td>
